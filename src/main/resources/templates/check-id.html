@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <title>Brak dostępu</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-red-50 flex items-center justify-center h-screen">
+
+<div class="bg-white shadow-2xl rounded-2xl p-8 max-w-md text-center">
+    <h1 class="text-2xl font-bold text-red-600 mb-4">Brak dostępu</h1>
+    <p class="mb-2">Nie masz jeszcze dostępu do systemu.</p>
+    <p>Skopiuj swój identyfikator i przekaż go administratorowi:</p>
+    <p class="mt-4 text-sm font-mono text-gray-800 break-all bg-gray-100 p-2 rounded-lg shadow-inner" th:text="${sub}">[Google ID]</p>
+    <form th:action="@{/logout}" method="post" class="mt-6">
+        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+        <button type="submit" class="text-sm text-blue-600 hover:underline bg-transparent border-none p-0">
+            Wyloguj się
+        </button>
+    </form>
+
+</div>
+
+</body>
+</html>

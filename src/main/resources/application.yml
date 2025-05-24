@@ -1,0 +1,44 @@
+server:
+  port: 8080
+  ssl:
+    enabled: false
+    key-store: classpath:keystore.p12
+    key-store-password: "#Ochrona1Danych2To3Klucz4Do5Sukcesu6@"
+    key-store-type: PKCS12
+    key-alias: finanse-ssl
+
+spring:
+  application:
+    name: systemfinansowy
+
+  datasource:
+    url: jdbc:postgresql://localhost:5432/system_finansowy_db
+    username: root
+    password: 2Asy2015
+    driver-class-name: org.postgresql.Driver
+
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+    show-sql: true
+
+
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            client-id:
+            client-secret:
+            scope:
+              - email
+              - profile
+        provider:
+          google:
+            authorization-uri: https://accounts.google.com/o/oauth2/v2/auth
+            token-uri: https://oauth2.googleapis.com/token
+            user-info-uri: https://www.googleapis.com/oauth2/v3/userinfo
