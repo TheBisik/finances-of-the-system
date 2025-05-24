@@ -1,1 +1,1 @@
-CC 4.0
+Global CC 4.0
