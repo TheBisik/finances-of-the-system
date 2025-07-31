@@ -4,6 +4,12 @@
     <meta charset="UTF-8">
     <title>Brak dostępu</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .blurred {
+            filter: blur(6px);
+            display: inline-block;
+        }
+    </style>
 </head>
 <body class="bg-red-50 flex items-center justify-center h-screen">
 
@@ -11,15 +17,52 @@
     <h1 class="text-2xl font-bold text-red-600 mb-4">Brak dostępu</h1>
     <p class="mb-2">Nie masz jeszcze dostępu do systemu.</p>
     <p>Skopiuj swój identyfikator i przekaż go administratorowi:</p>
-    <p class="mt-4 text-sm font-mono text-gray-800 break-all bg-gray-100 p-2 rounded-lg shadow-inner" th:text="${sub}">[Google ID]</p>
+
+    <!-- tu dodałem id i klasę blur -->
+    <p id="maskedId"
+       th:text="${sub}"
+       class="mt-4 text-sm font-mono text-gray-800 break-all bg-gray-100 p-2 rounded-lg shadow-inner filter blur-md"
+    >[Google ID]</p>
+
+    <button
+            type="button"
+            id="toggleBtn"
+            class="mt-4 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 focus:outline-none"
+    >Pokaż ID</button>
+
     <form th:action="@{/logout}" method="post" class="mt-6">
         <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
-        <button type="submit" class="text-sm text-blue-600 hover:underline bg-transparent border-none p-0">
+        <button
+                type="submit"
+                class="text-sm text-blue-600 hover:underline bg-transparent border-none p-0"
+        >
             Wyloguj się
         </button>
     </form>
-
 </div>
+
+<script>
+
+    const div = document.getElementById('maskedId');
+    const btn = document.getElementById('toggleBtn');
+    const googleID = div.innerText;
+
+
+    btn.addEventListener('click', () => {
+        if (div.classList.contains('blur-md') || div.classList.contains('blurred')) {
+            // usuń rozmycie
+            div.classList.remove('blur-md', 'blurred');
+            // możesz dodać: div.classList.add('blur-none');
+            btn.textContent = 'Ukryj ID';
+            div.innerText = googleID;
+        } else {
+            // dodaj rozmycie
+            div.classList.add('filter', 'blur-md');
+            btn.textContent = 'Pokaż ID';
+            div.innerText = "****";
+        }
+    });
+</script>
 
 </body>
 </html>
