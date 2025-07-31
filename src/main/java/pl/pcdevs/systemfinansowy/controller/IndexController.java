@@ -4,11 +4,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
-public class Dashboard {
+public class IndexController {
 
-    @GetMapping("/auth/dashboard")
-    public String dashboard() {
-        return "/auth/dashboard";
+    @GetMapping("/")
+    public String home() {
+        return "index";
     }
 
 }

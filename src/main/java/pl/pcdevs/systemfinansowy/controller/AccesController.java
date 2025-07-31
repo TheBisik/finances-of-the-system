@@ -21,13 +21,20 @@ public class AccesController {
     public String checkAcces(Model model, OAuth2AuthenticationToken authentication) { //rozszerzam o model i oAth2 google
         OAuth2User user = authentication.getPrincipal(); //pobieram z oauth2 springa aktualnie zalogowanego użtykownika
         String sub = user.getAttribute("sub"); // pobieram id sub z niego
+        String profileName  = user.getAttribute("name");      // lub "given_name"/"family_name"
+        String pictureUrl   = user.getAttribute("picture");
 
+        //Sprawdzam czy użytkownik ma dostep do systemu, pytam serwis który pytta dane czy istnieje taki uzytkownik pod takim googleid(sub) <- inaczej sub
         boolean exists = appUserService.userExists(sub);
-
+        
         if (exists) {
-            return "/auth/dashboard";
+            //zapisuje do modelu thyaleaf dla pliku html potrzebne dane do wyswietlenia
+            model.addAttribute("sub", sub);
+            model.addAttribute("name", profileName);
+            model.addAttribute("picture", pictureUrl);
+            return "/auth/dashboard"; //przekazuje do folderu a nastepnie pliku resources/auth/dashboard.html
         } else {
-            model.addAttribute("sub", sub); // dodaje sub do modelu który potem zwracam do formularza
+            
             return "check-id";
         }
 

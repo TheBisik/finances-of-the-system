@@ -5,15 +5,22 @@
     <title>Panel użytkownika</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="style.css" />
-    <!-- <link rel="stylesheet" th:href="@{/css/style.css}" /> -->
+     <link rel="stylesheet" th:href="@{/css/style.css}" />
 </head>
 <body>
-<div id="panel" class="grid grid-cols-7 grid-rows-4 h-screen overflow-y-auto">
+<div id="panel" class="grid grid-cols-7 grid-rows-4 min-h-screen overflow-y-auto">
     <nav class="col-start-1 col-span-1 row-start-1 row-span-4 p-4 bg-white shadow-2xl">
         <ul class="list-none space-y-4">
             <li>
                 <a href="#" class="block py-2 px-3 hover:shadow-md hover:bg-gray-50 rounded">
-                    Główna
+                    <div id="Dashboard-button" class="flex items-center space-x-2">
+                        <img
+                                src="https://cdn.jsdelivr.net/npm/heroicons@2.0.18/24/outline/home.svg"
+                                class="h-5 w-5"
+                                alt="Home icon"
+                        />
+                        <span>Dashboard</span>
+                    </div>
                 </a>
             </li>
             <li>
@@ -46,7 +53,7 @@
     </nav>
 
     <div id="profile-information" class="col-start-2 col-span-6 row-start-1 row-span-1">
-        info
+
     </div>
 
     <div id="main-information-panel" class="col-start-2 col-span-6 row-start-2 row-span-2 p-4">
@@ -55,6 +62,14 @@
 
     <div id="footer" class="col-start-2 col-span-6 row-start-4 row-span-1 p-4">
         Stopka
+    </div>
+</div>
+
+<div id="user-profil" class="absolute top-0 left-80  bg-orange-200">
+    <div style="border: 1px solid black" class="flex items-center justify-between">
+        <img th:src="${picture}" class="w-16 h-16 " alt="Zdjęcie Profilowe"/>
+        <span class="" th:text="'Użytkownik: ' +  ${text}">Użytkownik: Elonus-Maskus</span>
+
     </div>
 </div>
 
