@@ -24,17 +24,19 @@ public class AccesController {
         String profileName  = user.getAttribute("name");      // lub "given_name"/"family_name"
         String pictureUrl   = user.getAttribute("picture");
 
+        model.addAttribute("sub", sub);
+
         //Sprawdzam czy użytkownik ma dostep do systemu, pytam serwis który pytta dane czy istnieje taki uzytkownik pod takim googleid(sub) <- inaczej sub
         boolean exists = appUserService.userExists(sub);
         
         if (exists) {
-            //zapisuje do modelu thyaleaf dla pliku html potrzebne dane do wyswietlenia
-            model.addAttribute("sub", sub);
+            //zapisuje do modelu thyaleaf dla pliku html potrzebne dane do wyswietlenia | równierz linia 27-28
+
             model.addAttribute("name", profileName);
             model.addAttribute("picture", pictureUrl);
-            return "/auth/dashboard"; //przekazuje do folderu a nastepnie pliku resources/auth/dashboard.html
+            return "auth/dashboard"; //przekazuje do folderu a nastepnie pliku resources/auth/dashboard.html
         } else {
-            
+            model.addAttribute("error", "Użytkownik o ID “" + sub + "” nie istnieje.");
             return "check-id";
         }
 
