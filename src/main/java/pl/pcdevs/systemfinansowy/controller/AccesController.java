@@ -21,23 +21,20 @@ public class AccesController {
     public String checkAcces(Model model, OAuth2AuthenticationToken authentication) { //rozszerzam o model i oAth2 google
         OAuth2User user = authentication.getPrincipal(); //pobieram z oauth2 springa aktualnie zalogowanego użtykownika
         String sub = user.getAttribute("sub"); // pobieram id sub z niego
-        String profileName  = user.getAttribute("name");      // lub "given_name"/"family_name"
-        String pictureUrl   = user.getAttribute("picture");
+        String name  = user.getAttribute("name");      // lub "given_name"/"family_name"
+        String picture   = user.getAttribute("picture");
 
+    //zapisuje do modelu thyaleaf dla pliku html potrzebne dane do wyswietlenia
         model.addAttribute("sub", sub);
 
         //Sprawdzam czy użytkownik ma dostep do systemu, pytam serwis który pytta dane czy istnieje taki uzytkownik pod takim googleid(sub) <- inaczej sub
         boolean exists = appUserService.userExists(sub);
         
         if (exists) {
-            //zapisuje do modelu thyaleaf dla pliku html potrzebne dane do wyswietlenia | równierz linia 27-28
-
-            model.addAttribute("name", profileName);
-            model.addAttribute("picture", pictureUrl);
-            return "auth/dashboard"; //przekazuje do folderu a nastepnie pliku resources/auth/dashboard.html
+            return "redirect:/dashboard"; //przekierowanie na inny endpoint
         } else {
             model.addAttribute("error", "Użytkownik o ID “" + sub + "” nie istnieje.");
-            return "check-id";
+            return "check-id"; //przekazuje do folderu a nastepnie pliku resources/check-id
         }
 
 

@@ -1,11 +1,7 @@
 * {
     margin: 0;
     padding: 0;
+    background: black;
 }
 
-#btn-logout {
-    position: absolute;
-    right: 30px;
-    top: 0;
-}
 

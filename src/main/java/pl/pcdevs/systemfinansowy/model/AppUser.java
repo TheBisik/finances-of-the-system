@@ -11,11 +11,11 @@ public class AppUser {
     @Column(unique = true)
     private String googleId; // = sub id from google
 
-    @Column
-    private String name;
-
-    @Column
-    private String picture;
+//    @Column
+//    private String name;
+//
+//    @Column
+//    private String picture;
 
     public AppUser() { }
 
@@ -23,21 +23,21 @@ public class AppUser {
         this.googleId = googleId;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getPicture() {
-        return picture;
-    }
-
-    public void setPicture(String picture) {
-        this.picture = picture;
-    }
+//    public String getName() {
+//        return name;
+//    }
+//
+//    public void setName(String name) {
+//        this.name = name;
+//    }
+//
+//    public String getPicture() {
+//        return picture;
+//    }
+//
+//    public void setPicture(String picture) {
+//        this.picture = picture;
+//    }
 
     public Long getId() {
         return id;
