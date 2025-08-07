@@ -2,6 +2,7 @@ package pl.pcdevs.systemfinansowy.model;
 
 import jakarta.persistence.*;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,21 +13,17 @@ public class TransactionDate {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String day;
-    private String month;
-    private String year;
+
+    private LocalDate date;
+
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "transactionDate")
-    private List<FinanceRecord> transactionDate = new ArrayList<>();
+    private List<FinanceRecord> financeRecords = new ArrayList<>();
 
     public TransactionDate() {}
-    public TransactionDate(Long id, String day, String month, String year) {
-        this.id = id;
-        this.day = day;
-        this.month = month;
-        this.year = year;
+    public TransactionDate(LocalDate date) {
+        this.date = date;
     }
-
 
 
     public Long getId() {
@@ -37,27 +34,19 @@ public class TransactionDate {
         this.id = id;
     }
 
-    public String getDay() {
-        return day;
+    public LocalDate getDate() {
+        return date;
     }
 
-    public void setDay(String day) {
-        this.day = day;
+    public void setDate(LocalDate date) {
+        this.date = date;
     }
 
-    public String getMonth() {
-        return month;
+    public List<FinanceRecord> getFinanceRecords() {
+        return financeRecords;
     }
 
-    public void setMonth(String month) {
-        this.month = month;
-    }
-
-    public String getYear() {
-        return year;
-    }
-
-    public void setYear(String year) {
-        this.year = year;
+    public void setFinanceRecords(List<FinanceRecord> financeRecords) {
+        this.financeRecords = financeRecords;
     }
 }

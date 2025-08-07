@@ -3,12 +3,12 @@ package pl.pcdevs.systemfinansowy.controller;
 import ch.qos.logback.core.model.Model;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import pl.pcdevs.systemfinansowy.service.FinanceService;
+import pl.pcdevs.systemfinansowy.service.FinanceRecordService;
 
 @Controller
 public class SaldoController {
 
-    private FinanceService financeService;
+    private FinanceRecordService financeRecordService;
 
     @GetMapping("/saldo")
     public String saldo(Model model) {
