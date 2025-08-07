@@ -24,7 +24,7 @@ public class FinanceRecordService {
         Month month = getMonthEnum(monthName);
 
 
-        return repository.findByTransactionDate_TransactionDate_YearAndTransactionDate_TransactionDate_Month(year, month);
+        return repository.findByYearAndMonth(year, month);
     }
 
     private Month getMonthEnum(String monthName) {
