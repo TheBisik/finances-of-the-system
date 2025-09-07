@@ -12,6 +12,6 @@ public class UserProfileMapper {
         String sub = user.getAttribute("sub"); // pobieram id sub z niego
         String name  = user.getAttribute("name");      // lub "given_name"/"family_name"
         String picture   = user.getAttribute("picture");
-        return new UserProfileDto(name, sub, picture);
+        return new UserProfileDto(sub, name, picture);
     }
 }

@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.*;
 import pl.pcdevs.systemfinansowy.model.FinanceRecord;
 import pl.pcdevs.systemfinansowy.service.FinanceService;
 
-@Controller
+@RestController
 @RequestMapping("api/v1/financerecord")
 public class FinanceRecrodController {
 
@@ -23,10 +23,13 @@ public class FinanceRecrodController {
         return financeService.getRecordById(id);
     }
 
+//    @RequestBody - oczekuje body w formacie JSON lub XML
+//    @ModelAttribute - oczekuje danych zakodowanych w formularz application/x-www-form-urlencoded
+
     @PostMapping
-    public String addFinanceRecord(@RequestBody FinanceRecord financeRecord) {
+    public String addFinanceRecord(@ModelAttribute FinanceRecord financeRecord) {
         financeService.saveRecord(financeRecord);
-        return "redirect:/saldo";
+        return "<script>window.location.href = '/saldo';</script>";
     }
 
     @DeleteMapping

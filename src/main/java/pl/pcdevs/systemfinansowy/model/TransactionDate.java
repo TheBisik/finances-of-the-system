@@ -1,5 +1,7 @@
 package pl.pcdevs.systemfinansowy.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
@@ -17,7 +19,8 @@ public class TransactionDate {
     private LocalDate date;
 
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "transactionDate")
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "transactionDate")
+    @JsonBackReference // ponieważ to klasa podrzędna
     private List<FinanceRecord> financeRecords = new ArrayList<>();
 
     public TransactionDate() {}

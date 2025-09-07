@@ -27,18 +27,17 @@ public class AccesController {
 
         UserProfileDto userProfile = userProfileMapper.toDto(authentication); // wyciągam potrzebne dane po przez maper i DTO
 
-        String sub = userProfile.getSub(); // pobieram id sub z niego
 
     //zapisuje do modelu thyaleaf dla pliku html potrzebne dane do wyswietlenia
-        model.addAttribute("sub", sub);
+        model.addAttribute("sub", userProfile.getSub()); // pobieram id sub z niego
 
         //Sprawdzam czy użytkownik ma dostep do systemu, pytam serwis który pytta dane czy istnieje taki uzytkownik pod takim googleid(sub) <- inaczej sub
-        boolean exists = appUserService.userExists(sub);
+        boolean exists = appUserService.userExists(userProfile.getSub());
         
         if (exists) {
             return "redirect:/dashboard"; //przekierowanie na inny endpoint
         } else {
-            model.addAttribute("error", "Użytkownik o ID “" + sub + "” nie istnieje.");
+            model.addAttribute("error", "Użytkownik o ID “" + userProfile.getSub() + "” nie istnieje.");
             return "check-id"; //przekazuje do folderu a nastepnie pliku resources/check-id
         }
 
