@@ -18,7 +18,9 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests(auth -> auth
+                        .requestMatchers("/copy/**").denyAll()
                         .requestMatchers("/", "/css/**", "/js/**", "/images/**").permitAll()
+                        .requestMatchers("/api/v1/financerecords/**").permitAll() // todo tymczasowe
                         .requestMatchers("/check-id", "/auth/dashboard").authenticated() // te wymagają logowania
                         .anyRequest().authenticated()
                 )

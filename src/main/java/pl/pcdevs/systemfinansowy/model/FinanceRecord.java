@@ -11,7 +11,7 @@ public class FinanceRecord {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private FinanceType financeType;
-    private String Name;
+    private String name;
     private String description;
     private BigDecimal money;
 
@@ -24,9 +24,10 @@ public class FinanceRecord {
     public FinanceRecord(Long id, FinanceType financeType, String name, String description, BigDecimal money) {
         this.id = id;
         this.financeType = financeType;
-        Name = name;
+        this.name = name;
         this.description = description;
         this.money = money;
+        this.transactionDate = transactionDate;
     }
 
     public Long getId() {
@@ -46,11 +47,11 @@ public class FinanceRecord {
     }
 
     public String getName() {
-        return Name;
+        return name;
     }
 
     public void setName(String name) {
-        Name = name;
+        this.name = name;
     }
 
     public String getDescription() {
@@ -67,5 +68,13 @@ public class FinanceRecord {
 
     public void setMoney(BigDecimal money) {
         this.money = money;
+    }
+
+    public TransactionDate getTransactionDate() {
+        return transactionDate;
+    }
+
+    public void setTransactionDate(TransactionDate transactionDate) {
+        this.transactionDate = transactionDate;
     }
 }

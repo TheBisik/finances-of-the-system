@@ -5,7 +5,9 @@ import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import pl.pcdevs.systemfinansowy.dto.UserProfileDto;
 import pl.pcdevs.systemfinansowy.service.AppUserService;
+import pl.pcdevs.systemfinansowy.service.mapper.UserProfileMapper;
 
 
 @Controller
@@ -13,16 +15,19 @@ public class AccesController {
 
     private final AppUserService appUserService;
 
-    public AccesController(AppUserService appUserService) {
+    private final UserProfileMapper userProfileMapper;
+
+    public AccesController(AppUserService appUserService, UserProfileMapper userProfileMapper) {
         this.appUserService = appUserService;
+        this.userProfileMapper = userProfileMapper;
     }
 
     @GetMapping("/check-id")
     public String checkAcces(Model model, OAuth2AuthenticationToken authentication) { //rozszerzam o model i oAth2 google
-        OAuth2User user = authentication.getPrincipal(); //pobieram z oauth2 springa aktualnie zalogowanego użtykownika
-        String sub = user.getAttribute("sub"); // pobieram id sub z niego
-        String name  = user.getAttribute("name");      // lub "given_name"/"family_name"
-        String picture   = user.getAttribute("picture");
+
+        UserProfileDto userProfile = userProfileMapper.toDto(authentication); // wyciągam potrzebne dane po przez maper i DTO
+
+        String sub = userProfile.getSub(); // pobieram id sub z niego
 
     //zapisuje do modelu thyaleaf dla pliku html potrzebne dane do wyswietlenia
         model.addAttribute("sub", sub);
