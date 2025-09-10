@@ -16,6 +16,7 @@ import java.util.Optional;
 @Service
 public class FinanceService {
 
+
     private final FinanceRecordRepository repository;
     private final TransactionDateRepository transactionDateRepository;
 
@@ -27,8 +28,6 @@ public class FinanceService {
 
     public List<FinanceRecord> getRecordsByMonthAndYear(String monthName, int year) {
         Month month = getMonthEnum(monthName);
-        // Błąd: przekazywano obiekt Month, gdy metoda oczekuje int.
-        // Poprawka: używamy month.getValue(), aby uzyskać numer miesiąca (1-12).
         return repository.findByYearAndMonth(year, month.getValue());
     }
 
