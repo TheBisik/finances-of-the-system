@@ -2,7 +2,6 @@ package pl.pcdevs.systemfinansowy.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
-import pl.pcdevs.systemfinansowy.model.FinanceRecord;
 import pl.pcdevs.systemfinansowy.model.TransactionDate;
 
 import java.time.LocalDate;

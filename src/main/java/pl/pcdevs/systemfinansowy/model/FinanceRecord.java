@@ -1,6 +1,5 @@
 package pl.pcdevs.systemfinansowy.model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
@@ -17,7 +16,7 @@ public class FinanceRecord {
     private String description;
     private BigDecimal money;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "transaction_date_id", nullable = false)
     @JsonManagedReference // ponieważ to klasa nadrzędna, jpa najpierw używa jej
     private TransactionDate transactionDate;
