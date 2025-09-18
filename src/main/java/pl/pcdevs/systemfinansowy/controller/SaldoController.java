@@ -7,7 +7,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import pl.pcdevs.systemfinansowy.dto.UserProfileDto;
-import pl.pcdevs.systemfinansowy.model.FinanceRecord;
 import pl.pcdevs.systemfinansowy.service.DateService;
 import pl.pcdevs.systemfinansowy.service.FinanceService;
 import pl.pcdevs.systemfinansowy.service.mapper.UserProfileMapper;

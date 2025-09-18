@@ -1,7 +1,5 @@
 package pl.pcdevs.systemfinansowy.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import pl.pcdevs.systemfinansowy.model.FinanceRecord;
 import pl.pcdevs.systemfinansowy.service.FinanceService;
