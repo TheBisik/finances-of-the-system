@@ -18,13 +18,16 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests(auth -> auth
+//                        .anyRequest().permitAll()
+                        .requestMatchers("/copy/**").denyAll()
                         .requestMatchers("/", "/css/**", "/js/**", "/images/**").permitAll()
-                        .requestMatchers("/check-id", "/auth/dashboard").authenticated() // te wymagają logowania
+                        // Te endpointy wymagają uwierzytelnienia
+                        .requestMatchers("/check-id", "/auth/dashboard", "/api/v1/financerecords").authenticated()
                         .anyRequest().authenticated()
                 )
                 .oauth2Login(oauth -> oauth
                         .loginPage("/oauth2/authorization/google")
-                        .defaultSuccessUrl("/check-id", true) // <-- przekierowanie po zalogowaniu
+                        .defaultSuccessUrl("/check-id", true)
                 )
                 .logout(logout -> logout
                         .logoutSuccessUrl("/").permitAll()

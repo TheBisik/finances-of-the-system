@@ -11,11 +11,14 @@ public class AppUser {
     @Column(unique = true)
     private String googleId; // = sub id from google
 
+
     public AppUser() { }
 
     public AppUser(String googleId) {
         this.googleId = googleId;
     }
+
+
 
     public Long getId() {
         return id;

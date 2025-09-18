@@ -16,6 +16,8 @@ public class AppUserService {
     public boolean userExists(String googleId) {
         return appUserRepository.findByGoogleId(googleId).isPresent();
     }
+
+
 }
 
 

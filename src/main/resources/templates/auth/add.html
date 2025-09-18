@@ -5,7 +5,7 @@
     <title>Panel użytkownika</title>
     <script th:src="@{/js/twconfig.js}"></script>
     <script src="https://cdn.tailwindcss.com"></script>
-     <link rel="stylesheet" th:href="@{/css/style.css}" />
+    <link rel="stylesheet" th:href="@{/css/style.css}" />
 </head>
 <body>
 <div id="panel" class="grid grid-cols-7 grid-rows-4 min-h-screen overflow-y-auto">
@@ -33,7 +33,7 @@
             </span>
                 <ul class="list-none list-inside pl-4 space-y-3 ">
                     <li>
-                        <a href="/saldo" class="py-1 px-3 hover:shadow-md hover:bg-gray-50 rounded">
+                        <a href="#" class="py-1 px-3 hover:shadow-md hover:bg-gray-50 rounded">
                             Saldo
                         </a>
                     </li>
@@ -74,7 +74,49 @@
     </div>
 
     <div id="main-information-panel" class="col-start-2 col-span-6 row-start-2 row-span-2 p-4">
-        &nbsp;
+        <div class="text-center flex">
+            <div class="flex-auto">
+                <div class="py-3 px-3 mr-1  text-center border-gray-400 shadow-md text-2xl bg-sky-50 rounded mb-3">
+                    <div class="flex-row justify-center items-center">
+                        <form id="form" action="/api/v1/financerecord" method="POST">
+                            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+                            <div class="p-1">
+                                <span>ID: </span>&nbsp;<input class="text-center" value="NA" readonly/>
+                            </div>
+                            <div class="p-1">
+                                <span>Rodzaj: </span>
+                                <select name="financeType">
+                                    <option value="REVENUE" th:selected="${T(pl.pcdevs.systemfinansowy.model.FinanceType).REVENUE}">Przychód</option>
+                                    <option value="EXPENSE" th:selected="${T(pl.pcdevs.systemfinansowy.model.FinanceType).EXPENSE}">Wydatek</option>
+                                </select>
+                            </div>
+                            <div class="p-1">
+                                <span>Kwota: </span><input class="text-center" name="money" placeholder="zł "/>
+                            </div>
+                            <div class="p-1">
+                                <span>Tytuł: </span><input class="text-center" name="name" placeholder="Nazwa"/>
+                            </div>
+                            <div class="p-1">
+                                <span>Opis: </span><input class="text-center" name="description" placeholder="opis"/>
+                            </div>
+                            <div class="mt-1">
+                                <a href="/saldo" class="bg-red-500 rounded-full p-2">Anuluj</a>
+                                <input type="button" onclick="formSubmit();" class="bg-yellow-300 rounded-full p-2" value="Zatwierdź zmiany">
+                            </div>
+                        </form>
+                        <script>
+                            // Corrected formSubmit function
+                            function formSubmit() {
+                                if (window.confirm("Zapisać rekord?")) {
+                                    const form = document.getElementById('form');
+                                    form.submit();
+                                }
+                            }
+                        </script>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
     <div id="footer" class="col-start-2 col-span-6 row-start-4 row-span-1 p-4">

@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <title>Panel użytkownika</title>
+    <script th:src="@{/js/twconfig.js}"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" th:href="@{/css/style.css}" />
+</head>
+<body class="bg-gray-200">
+<div id="panel" class="grid grid-cols-7 min-h-screen overflow-y-auto">
+    <nav class="col-start-1 col-span-1 row-start-1 row-span-4 text-center bg-white shadow-2xl">
+        <ul class="list-none space-y-4">
+            <li>
+                <a href="/dashboard" class="text-center block py-2 px-3 hover:shadow-md hover:bg-gray-50 rounded">
+                    <div id="Dashboard-button" class="flex items-center justify-center space-x-2">
+                        <img src="https://cdn.jsdelivr.net/npm/heroicons@2.0.18/24/outline/home.svg" class="h-5 w-5" alt="Home icon"/>
+                        <span>Dashboard</span>
+                    </div>
+                </a>
+            </li>
+            <li>
+                <span class="block py-2 px-3 font-semibold ">Rozliczenia</span>
+                <ul class="list-none list-inside pl-4 space-y-3 ">
+                    <li>
+                        <a href="/saldo" class="py-1 px-3 hover:shadow-md hover:bg-gray-50 rounded">
+                            Saldo
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="py-1 px-3 hover:shadow-md hover:bg-gray-50 rounded">
+                            Faktura
+                        </a>
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <span class="block py-2 px-3 font-semibold">Zarządzanie</span>
+                <ul class="list-none list-inside pl-4 space-y-3">
+                    <li>
+                        <a href="#" class="py-1 px-3 hover:shadow-md hover:bg-gray-50 rounded">Klienci</a>
+                    </li>
+                    <li>
+                        <a href="#" class="py-1 px-3 hover:shadow-md hover:bg-gray-50 rounded">Pracownicy</a>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </nav>
+    <div id="profile-information" class="mx-auto col-start-2 col-span-6 row-start-1 row-span-1 ">
+        <div id="profile-display">
+<!--            //todo przekazanie modelem zdjęcia i nazwy użytkownika z o2auth tokenu, poniewaz w saldzie nie wysepuje i nie działa :?-->
+            <div class="float-left flex items-center justify-center bg-white py-3 px-10 text-center rounded-br-lg rounded-bl-lg shadow-xl">
+                <img th:src="${picture}" class="bg-gray-800 rounded font-bold font-sans text-zinc-900 dark:text-zinc-900 w-16 h-16 " alt="Zdjęcie Profilu"/>
+                <span class="ml-2 px-2 font-bold font-sans text-zinc-900 dark:text-zinc-900" th:text="${name}">Elonus-Maskus</span>
+            </div>
+        </div>
+    </div>
+    <div id="main-information-panel" class="col-start-2 col-span-6 row-start-2 row-span-2 p-4">
+        <div class="text-center flex">
+            <div class="flex-auto">
+                <div class="py-3 px-3 mr-1 h-24 text-center border-gray-400 shadow-md text-2xl bg-sky-50 rounded mb-3">
+                    <span class="p-1">Stan Konta</span><br>
+                    <span>200000000<span class="text-base">&nbsp;zł</span></span>
+                </div>
+            </div>
+            <div class="flex-auto">
+                <div class="py-3 px-3 ml-1 h-24 text-center border-gray-400 text-2xl shadow-md bg-sky-50 rounded mb-3">
+                    <span class="p-1">Bilans Miesiąca</span><br>
+                    <span>+200<span class="text-base">&nbsp;zł</span></span>
+                </div>
+            </div>
+        </div>
+        <div class="shadow-xl text-xl ml-4 mr-4 text-center p-2 border-white bg-sky-50 rounded">
+            <span>Okres Rozliczeniowy</span>
+            <br>
+            <div class="flex flex-row justify-center items-center">
+                <button id="left-btn" class="bg-gray-300  rounded-full pl-2 pr-2 mr-2 text-center" onclick="minus_year()">&larr;</button>
+                <span>
+                    <input id="current-year" class="text-center bg-sky-50" type="number" th:value="${currentYear}" value="2000">
+                </span>
+                <button id="right-btn" class="bg-gray-300  rounded-full pl-2 pr-2 ml-2 text-center" onclick="plus_year()">&rarr;</button>
+            </div>
+
+            <div class="flex flex-wrap justify-center items-center mt-3" id="month-container">
+                <button class="bg-neutral-200 p-5 shadow-md m-1" data-month="january">
+                    Styczeń
+                </button>
+                <button class="bg-neutral-200 p-5 shadow-md m-1" data-month="february">
+                    Luty
+                </button>
+                <button class="bg-neutral-200 p-5 shadow-md m-1" data-month="march">
+                    Marzec
+                </button>
+                <button class="bg-neutral-200 p-5 shadow-md m-1" data-month="april">
+                    Kwiecień
+                </button>
+                <button class="bg-neutral-200 p-5 shadow-md m-1" data-month="may">
+                    Maj
+                </button>
+                <button class="bg-neutral-200 p-5 shadow-md m-1" data-month="june">
+                    Czerwiec
+                </button>
+                <button class="bg-neutral-200 p-5 shadow-md m-1" data-month="july">
+                    Lipiec
+                </button>
+                <button class="bg-neutral-200 p-5 shadow-md m-1" data-month="august">
+                    Sierpień
+                </button>
+                <button class="bg-neutral-200 p-5 shadow-md m-1" data-month="september">
+                    Wrzesień
+                </button>
+                <button class="bg-neutral-200 p-5 shadow-md m-1" data-month="october">
+                    Październik
+                </button>
+                <button class="bg-neutral-200 p-5 shadow-md m-1" data-month="november">
+                    Listopad
+                </button>
+                <button class="bg-neutral-200 p-5 shadow-md m-1" data-month="december">
+                    Grudzień
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div id="footer" class="col-start-2 col-span-6 row-start-4 row-span-1 p-4">
+        <form th:action="@{/logout}" method="post" class="absolute top-0 right-4 px-5 py-2 bg-gray-500 hover:bg-gray-100 font-semibold rounded-b-lg shadow-xl">
+            <button type="submit">Wyloguj się</button>
+        </form>
+    </div>
+</div>
+
+
+<script>
+    const inputDisplayElement = document.getElementById('current-year');
+    function plus_year() {
+        let temp = inputDisplayElement.value;
+        ++temp;
+        inputDisplayElement.value = temp;
+    }
+
+    function minus_year() {
+        let temp = inputDisplayElement.value;
+        --temp;
+        inputDisplayElement.value = temp;
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+        const monthContainer = document.getElementById('month-container');
+        const currentYearInput = document.getElementById('current-year');
+
+        if (monthContainer && currentYearInput) {
+            monthContainer.addEventListener('click', (event) => {
+                const button = event.target.closest('button');
+
+                if (button) {
+                    const month = button.dataset.month;
+                    const year = currentYearInput.value;
+
+                    const newUrl = `api/v1/financerecords?month=${month}&year=${year}`;
+
+                    // console.log(newUrl);
+
+                    window.location.href = newUrl;
+
+                    // Możesz tutaj użyć fetch() do wysłania żądania,
+                    // lub przekierować stronę, np. tak:
+                    // window.location.href = newUrl;
+                }
+            });
+        }
+    });
+</script>
+</body>
+</html>
