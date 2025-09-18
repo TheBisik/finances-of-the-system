@@ -8,10 +8,8 @@ import java.time.LocalDate;
 @Service
 public class DateService {
 
-    private LocalDate date;
-
     public int getCurrentDate() {
-        date = LocalDate.now();
+        LocalDate date = LocalDate.now();
         return date.getYear();
     }
 }

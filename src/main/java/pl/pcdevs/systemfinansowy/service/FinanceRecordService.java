@@ -19,9 +19,7 @@ public class FinanceRecordService {
         this.repository = repository;
     }
 
-    public List<FinanceRecord> getRecordsByMonthAndYear(String monthName, int year){
-
-        Month month = getMonthEnum(monthName);
+    public List<FinanceRecord> getRecordsByMonthAndYear(int month, int year){
 
 
         return repository.findByYearAndMonth(year, month);

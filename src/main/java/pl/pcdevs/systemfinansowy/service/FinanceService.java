@@ -32,9 +32,9 @@ public class FinanceService {
     }
 
     /**
-     * Konwertuje polską nazwę miesiąca (bez znaków diakrytycznych) na obiekt Month.
-     * @param monthName nazwa miesiąca, np. "styczen"
-     * @return odpowiedni obiekt Month
+     * Converting Polish name of month (without diakrytycznych) to object Month.
+     * @param monthName name of month, "styczen"
+     * @return equals object Month
      */
     private Month getMonthEnum(String monthName) {
         return switch (monthName.toLowerCase(new Locale("pl", "PL"))) {

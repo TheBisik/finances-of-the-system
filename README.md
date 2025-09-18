@@ -108,7 +108,7 @@ Planowane są kolejne funkcjonalności:
 
 
 ![Ekran logowania](src/main/docs/screenshots/login.png)  
-![Brak Dostepu](src/main/docs/screenshots/no-access.png.png)  
+![Brak Dostepu](src/main/docs/screenshots/no-access.png)  
 ![Lista rekordów finansowych](src/main/docs/screenshots/records.png)  
 
 

@@ -140,5 +140,22 @@ public class FinanceServiceTest {
         verify(financeRecordRepository).save(any(FinanceRecord.class));
     }
 
+    @Test
+    public void shouldReturnById() {
+
+        //Act
+        Long idForFinanceRecord = 5L;
+
+        Optional<FinanceRecord> exceptedRecord = Optional.of(new FinanceRecord(5L, REVENUE, "Testowy1", "Testowy opis", BigDecimal.valueOf(2000), new TransactionDate(LocalDate.now())));
+
+        //Act
+        when(financeRecordRepository.findById(5L)).thenReturn(exceptedRecord);
+
+
+        //Assert
+        assertEquals(exceptedRecord.get(), financeService.getRecordById(idForFinanceRecord));
+        assertEquals(exceptedRecord.get().getId(), financeService.getRecordById(5L).getId());
+    }
+
 
 }
