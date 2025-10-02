@@ -143,7 +143,7 @@ public class FinanceServiceTest {
     @Test
     public void shouldReturnById() {
 
-        //Act
+        //Arrange
         Long idForFinanceRecord = 5L;
 
         Optional<FinanceRecord> exceptedRecord = Optional.of(new FinanceRecord(5L, REVENUE, "Testowy1", "Testowy opis", BigDecimal.valueOf(2000), new TransactionDate(LocalDate.now())));

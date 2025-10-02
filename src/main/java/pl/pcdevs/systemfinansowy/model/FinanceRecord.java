@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
 import java.math.BigDecimal;
+import java.util.Objects;
 
 
 @Entity
@@ -78,5 +79,16 @@ public class FinanceRecord {
 
     public void setTransactionDate(TransactionDate transactionDate) {
         this.transactionDate = transactionDate;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (!(o instanceof FinanceRecord that)) return false;
+        return Objects.equals(id, that.id) && financeType == that.financeType && Objects.equals(name, that.name) && Objects.equals(description, that.description) && Objects.equals(money, that.money) && Objects.equals(transactionDate, that.transactionDate);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, financeType, name, description, money, transactionDate);
     }
 }

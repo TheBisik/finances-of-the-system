@@ -8,10 +8,10 @@ public class AppUserService {
 
     private final AppUserRepository appUserRepository;
 
-
     public AppUserService(AppUserRepository appUserRepository) {
         this.appUserRepository = appUserRepository;
     }
+
 
     public boolean userExists(String googleId) {
         return appUserRepository.findByGoogleId(googleId).isPresent();
