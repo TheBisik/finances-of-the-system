@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <title>Panel użytkownika</title>
+    <script th:src="@{/js/twconfig.js}"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" th:href="@{/css/style.css}" />
+</head>
+<body class="bg-gray-200">
+<div id="panel" class="grid grid-cols-7 min-h-screen overflow-y-auto">
+    <nav class="col-start-1 col-span-1 row-start-1 row-span-4 text-center bg-white shadow-2xl">
+        <ul class="list-none space-y-4">
+            <li>
+                <a href="/dashboard" class="text-center block py-2 px-3 hover:shadow-md hover:bg-gray-50 rounded">
+                    <div id="Dashboard-button" class="flex items-center justify-center space-x-2">
+                        <img src="https://cdn.jsdelivr.net/npm/heroicons@2.0.18/24/outline/home.svg" class="h-5 w-5" alt="Home icon"/>
+                        <span>Dashboard</span>
+                    </div>
+                </a>
+            </li>
+            <li>
+                <span class="block py-2 px-3 font-semibold ">Rozliczenia</span>
+                <ul class="list-none list-inside pl-4 space-y-3 ">
+                    <li>
+                        <a href="/saldo" class="py-1 px-3 hover:shadow-md hover:bg-gray-50 rounded">
+                            Saldo
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="py-1 px-3 hover:shadow-md hover:bg-gray-50 rounded">
+                            Faktura
+                        </a>
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <span class="block py-2 px-3 font-semibold">Zarządzanie</span>
+                <ul class="list-none list-inside pl-4 space-y-3">
+                    <li>
+                        <a href="#" class="py-1 px-3 hover:shadow-md hover:bg-gray-50 rounded">Klienci</a>
+                    </li>
+                    <li>
+                        <a href="#" class="py-1 px-3 hover:shadow-md hover:bg-gray-50 rounded">Pracownicy</a>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </nav>
+    <div id="profile-information" class="mx-auto col-start-2 col-span-6 row-start-1 row-span-1 ">
+        <div id="profile-display">
+            <!--            //todo przekazanie modelem zdjęcia i nazwy użytkownika z o2auth tokenu, poniewaz w saldzie nie wysepuje i nie działa :?-->
+            <div class="float-left flex items-center justify-center bg-white py-3 px-10 text-center rounded-br-lg rounded-bl-lg shadow-xl">
+                <img th:src="${picture}" class="bg-gray-800 rounded font-bold font-sans text-zinc-900 dark:text-zinc-900 w-16 h-16 " alt="Zdjęcie Profilu"/>
+                <span class="ml-2 px-2 font-bold font-sans text-zinc-900 dark:text-zinc-900" th:text="${name}">Elonus-Maskus</span>
+            </div>
+        </div>
+    </div>
+    <div id="main-information-panel" class="col-start-2 col-span-6 row-start-2 row-span-2 p-4">
+        <div class="text-center flex">
+            <div class="flex-auto">
+                <div class="py-3 px-3 mr-1 h-24 text-center border-gray-400 shadow-md text-2xl bg-sky-50 rounded mb-3">
+                    <span class="p-1">Stan Konta</span><br>
+                    <span>200000000<span class="text-base">&nbsp;zł</span></span>
+                </div>
+            </div>
+            <div class="flex-auto">
+                <div class="py-3 px-3 ml-1 h-24 text-center border-gray-400 text-2xl shadow-md bg-sky-50 rounded mb-3">
+                    <span class="p-1">Bilans Miesiąca</span><br>
+                    <span>+200<span class="text-base">&nbsp;zł</span></span>
+                </div>
+            </div>
+        </div>
+        <div class="shadow-xl text-xl ml-4 mr-4 text-center p-2 border-white bg-sky-50 rounded">
+            <span class="text-lg">Okres Rozliczeniowy</span>
+            <br>
+            <div class="flex flex-row justify-center items-center">
+                <span>
+                    <input id="month-name" class="font-bold text-center text-bg-md bg-sky-50" type="text" th:value="${monthName}" value="Styczeń">
+                </span>
+            </div>
+
+            <div class="flex flex-wrap justify-center items-center mt-3" id="month-container">
+                <table class="w-full table-fixed font-light">
+                    <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nazwa</th>
+                        <th>Opis</th>
+                        <th>Saldo</th>
+                        <th>Data</th>
+                        <th>Opcje</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="financerecord, stat : ${financeRecords}">
+                        <td th:text="${financerecord.getId()}">T1</td>
+                        <td th:text="${financerecord.getName()}">TZakupy</td>
+                        <td th:text="${financerecord.getDescription()}">TBułki w pierkani</td>
+
+                        <td>
+                            <span th:text="${financerecord.getFinanceType().name() == 'REVENUE' ? '+' : '-' }"></span>
+
+                            <span th:text="${financeRecordsMoneyList[__${stat.index}__]}">100,00</span>
+
+                            <span>&nbsp;zł</span>
+                        </td>
+
+                        <td th:text="${financerecord.transactionDate.getDate()}">T03.10.2025</td>
+
+                        <td>
+<!--                            //todo zmieinć api-->
+                            <div class="flex items-center justify-center space-x-2">
+                                <a th:href="@{/api/v1/financerecord/edit/{id}(id=${financerecord.id})}"
+                                   class="py-1 px-3 hover:bg-green-600 rounded bg-green-400 text-white no-underline text-sm">
+                                    Edytuj
+                                </a>
+                                <a th:href="@{/api/v1/financerecord/delete/{id}(id=${financerecord.id})}"
+                                   class="py-1 px-3 hover:bg-red-600 rounded bg-red-400 text-white no-underline text-sm"
+                                   onclick="return confirm('Czy na pewno chcesz usunąć ten rekord?');">
+                                    Usuń
+                                </a>
+                            </div>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div id="footer" class="col-start-2 col-span-6 row-start-4 row-span-1 p-4">
+        <form th:action="@{/logout}" method="post" class="absolute top-0 right-4 px-5 py-2 bg-gray-500 hover:bg-gray-100 font-semibold rounded-b-lg shadow-xl">
+            <button type="submit">Wyloguj się</button>
+        </form>
+    </div>
+</div>
+
+
+<script>
+    const inputDisplayElement = document.getElementById('current-year');
+    function plus_year() {
+        let temp = inputDisplayElement.value;
+        ++temp;
+        inputDisplayElement.value = temp;
+    }
+
+    function minus_year() {
+        let temp = inputDisplayElement.value;
+        --temp;
+        inputDisplayElement.value = temp;
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+        const monthContainer = document.getElementById('month-container');
+        const currentYearInput = document.getElementById('current-year');
+
+        if (monthContainer && currentYearInput) {
+            monthContainer.addEventListener('click', (event) => {
+                const button = event.target.closest('button');
+
+                if (button) {
+                    const month = button.dataset.month;
+                    const year = currentYearInput.value;
+
+                    const newUrl = `api/v1/financerecords?month=${month}&year=${year}`;
+
+                    // console.log(newUrl);
+
+                    window.location.href = newUrl;
+
+                    // Możesz tutaj użyć fetch() do wysłania żądania,
+                    // lub przekierować stronę, np. tak:
+                    // window.location.href = newUrl;
+                }
+            });
+        }
+    });
+</script>
+</body>
+</html>

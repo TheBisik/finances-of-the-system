@@ -19,7 +19,7 @@ public class TransactionDate {
     private LocalDate date;
 
 
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "transactionDate")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "transactionDate")
     @JsonBackReference // ponieważ to klasa podrzędna
     private List<FinanceRecord> financeRecords = new ArrayList<>();
 

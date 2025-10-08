@@ -2,6 +2,7 @@ package pl.pcdevs.systemfinansowy.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import pl.pcdevs.systemfinansowy.model.FinanceRecord;
 import pl.pcdevs.systemfinansowy.model.TransactionDate;
 import pl.pcdevs.systemfinansowy.repository.FinanceRecordRepository;
@@ -26,9 +27,25 @@ public class FinanceService {
         this.transactionDateRepository = transactionDateRepository;
     }
 
+    private List<FinanceRecord> findByTransactionDate(int monthNumber, int year) {
+
+        if (monthNumber < 1 || monthNumber > 12) {
+            throw new IllegalArgumentException("Month number must be between 1 and 12");
+        }
+
+        LocalDate startDate = LocalDate.of(year, monthNumber, 1);
+        LocalDate endDate = startDate.withDayOfMonth(startDate.lengthOfMonth());
+
+        return repository.findByTransactionDateBetween(startDate, endDate);
+    }
+
     public List<FinanceRecord> getRecordsByMonthAndYear(String monthName, int year) {
         Month month = getMonthEnum(monthName);
-        return repository.findByYearAndMonth(year, month.getValue());
+        return findByTransactionDate(month.getValue(), year);
+    }
+
+    public List<FinanceRecord> getRecordsByMonthAndYear(int monthNumber, int year) {
+        return findByTransactionDate(monthNumber, year);
     }
 
     /**
@@ -37,7 +54,7 @@ public class FinanceService {
      * @return equals object Month
      */
     private Month getMonthEnum(String monthName) {
-        return switch (monthName.toLowerCase(new Locale("pl", "PL"))) {
+        return switch (monthName.toLowerCase(Locale.ROOT)) {
             case "styczen" -> Month.JANUARY;
             case "luty" -> Month.FEBRUARY;
             case "marzec" -> Month.MARCH;
@@ -54,6 +71,9 @@ public class FinanceService {
         };
     }
 
+
+
+    @Transactional
     public FinanceRecord saveRecord(FinanceRecord record) {
         if (record.getTransactionDate() == null) {
             LocalDate today = LocalDate.now();
@@ -77,4 +97,11 @@ public class FinanceService {
     public void deleteRecord(Long id) {
         repository.deleteById(id);
     }
+
+
 }
+
+//todo Rozwiązać problem z serwisem, błąd logiczny danych w BD postgresql
+//todo 1. Ustalić jaki typ danych jest zapisywany w polach DB
+//todo 2. Okreslić ja dane zapsiują się do DB
+//todo 3. ujednolicić system z DB
