@@ -40,7 +40,7 @@ public class FinanceService {
     }
 
     public List<FinanceRecord> getRecordsByMonthAndYear(String monthName, int year) {
-        Month month = getMonthEnum(monthName);
+        Month month = getMonthEnumFromString(monthName);
         return findByTransactionDate(month.getValue(), year);
     }
 
@@ -53,7 +53,7 @@ public class FinanceService {
      * @param monthName name of month, "styczen"
      * @return equals object Month
      */
-    private Month getMonthEnum(String monthName) {
+    private Month getMonthEnumFromString(String monthName) {
         return switch (monthName.toLowerCase(Locale.ROOT)) {
             case "styczen" -> Month.JANUARY;
             case "luty" -> Month.FEBRUARY;
@@ -68,6 +68,27 @@ public class FinanceService {
             case "listopad" -> Month.NOVEMBER;
             case "grudzien" -> Month.DECEMBER;
             default -> throw new IllegalArgumentException("Nieprawidłowa nazwa miesiąca: " + monthName);
+        };
+    }
+
+    public String getMonthNameByNumber(int monthInt) {
+        if (monthInt <= 1 || monthInt >= 12) {
+            throw new IllegalArgumentException("Month number must be between 1 and 12");
+        }
+        return switch (monthInt) {
+            case 1 -> "Styczeń";
+            case 2 -> "Luty";
+            case 3 -> "Marzec";
+            case 4 -> "Kwiecień";
+            case 5 -> "Maj";
+            case 6 -> "Czerwiec";
+            case 7 -> "Lipiec";
+            case 8 -> "Sierpień";
+            case 9 -> "Wrzesień";
+            case 10 -> "Październik";
+            case 11 -> "Listopad";
+            case 12 -> "Grudzień";
+            default -> null;
         };
     }
 

@@ -33,8 +33,8 @@ public class DisplayFinanceRecordsController {
         this.financeRecordsMoneyMapper = financeRecordsMoneyMapper;
     }
 
-    @GetMapping("/saldo/financerecords/{year}/{month}")
-    public String displayFinanceRecordsController(Model model, OAuth2AuthenticationToken authentication, @PathVariable int month, @PathVariable int year) {
+    @GetMapping("/saldo/financerecords/{year}/{monthInt}")
+    public String displayFinanceRecordsController(Model model, OAuth2AuthenticationToken authentication, @PathVariable int monthInt, @PathVariable int year) {
 
         UserProfileDto userProfile = userProfileMapper.toDto(authentication);
 
@@ -44,12 +44,12 @@ public class DisplayFinanceRecordsController {
         model.addAttribute("currentYear", dateService.getCurrentDate());
 
 
-        List<FinanceRecord> financeRecordList = financeService.getRecordsByMonthAndYear(year, month);
+        List<FinanceRecord> financeRecordList = financeService.getRecordsByMonthAndYear(year, monthInt);
         model.addAttribute("financeRecordsMoneyList", financeRecordsMoneyMapper.format(financeRecordList));
 
 
         model.addAttribute("financeRecords", financeRecordList);
-        model.addAttribute("monthName", financeService.getMonthNameByNumber(month));
+        model.addAttribute("monthName", financeService.getMonthNameByNumber(monthInt));
 
         return "auth/financerecord";
     }
